@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[15]:
 
 
 import numpy as np
@@ -9,7 +9,7 @@ from scipy import spatial
 import matplotlib.pyplot as plt
 
 
-# In[9]:
+# In[16]:
 
 
 embeddings_dict = {}
@@ -29,7 +29,7 @@ print(len(words))
 print(len(embeddings_dict))
 
 
-# In[10]:
+# In[17]:
 
 
 def find_closest_embeddings_euclidean(vector_map, embedding):
@@ -54,7 +54,7 @@ def get_avg_sum_embedding(line, dictionary):
     return sum_of_vector
 
 
-# In[11]:
+# In[18]:
 
 
 attr_map = 'Trane-Demos/three_datasets/flight-delay/FlightDelay.mapping'
@@ -70,7 +70,7 @@ for key, val in attr_description_map.items():
     attr_vector_map[key] = get_avg_sum_embedding(val, embeddings_dict)
 
 
-# In[15]:
+# In[19]:
 
 
 human_query_dict = {}
@@ -80,10 +80,17 @@ writer = open('output.txt', 'w')
 sum_of_human_query_vector = np.full((200, ), 0)
 for line in f:
     writer.write(line + "\n")
-    sum_of_human_query_vector = get_avg_sum_embedding(line, embeddings_dict)
-    human_query_dict[line] = sum_of_human_query_vector
+    query = line.split("|")[0]
+    sum_of_human_query_vector = get_avg_sum_embedding(query, embeddings_dict)
+    human_query_dict[query] = sum_of_human_query_vector
     rank_euclidian = find_closest_embeddings_euclidean(attr_vector_map, sum_of_human_query_vector)
     rank_cosine = find_closest_embeddings_cosine(attr_vector_map, sum_of_human_query_vector)
-    writer.write("Euclidian rank -> " + str(rank_euclidian) + "\n")
-    writer.write("Cosine rank -> " + str(rank_cosine) + "\n")
+    writer.write("Euclidian rank -> " + str(rank_euclidian) + "\n\n")
+    writer.write("Cosine rank -> " + str(rank_cosine) + "\n\n")
+
+
+# In[ ]:
+
+
+
 

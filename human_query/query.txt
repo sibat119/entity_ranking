@@ -1,1 +1,36 @@
-Predict how many flights will start from this airport tomorrow
+Predict how many flights will start from this airport tomorrow| DATE
+predict how many flights will leave the day after tomorrow| DATE
+I want to know how many flight will start monday| DAY_OF_WEEK
+Predict how many flight will depart this sunday| DAY_OF_WEEK
+Predict how many flights of Emirates Airway will be available for scheduling| AIRLINE
+Predict how many flights of Quatar Airway will need to be rescheduled| AIRLINE
+Predict all flight numbers with conflicting landing time because of delay| FLIGHT_NUMBER
+Get all ids of flights that will depart within next week| FLIGHT_NUMBER
+Get all aircraft with possible technical difficulties| TAIL_NUMBER
+Predict how many aircraft will be delayed| TAIL_NUMBER
+Predict all flight that will land with origin airpot Newyork| ORIGIN_AIRPORT
+As cyclone is coming predict which flight might land in Luisiana where they should have landed in New Maxico| ORIGIN_AIRPORT
+Predict number of flights with destination changed because of cyclone| DESTINATION_AIRPORT
+Predict number of flight leaving for Dubai next week| DESTINATION_AIRPORT
+Predict number of flight that will depart between 12 AM and 4 PM| SCHEDULED_DEPARTURE_HOUR
+Predict flight ids whose scheduled departure time will be delayed at least one hour| SCHEDULED_DEPARTURE_HOUR
+Preduict number of flight that will depart from JFK with expected flight duration of one hour| SCHEDULED_TIME
+Get number of flights with expected elapsed time less than three hours| SCHEDULED_TIME
+Get number of flights with actual elapsed time is greated than expected time tomorrow| ELAPSED_TIME
+Predict flights which will have actual elapsed time greater than five hours within next week| ELAPSED_TIME
+Predict number of flights with departure delay more than one hour| DEPARTURE_DELAY
+Get the count of flights with no departure delay that departs tomorrow| DEPARTURE_DELAY
+Predict all flights with arrival delay more than five minutes| ARRIVAL_DELAY
+Predict number of flights who will have arrival delay between ten minutes to thirty minutes within next week| ARRIVAL_DELAY
+Predict number of cancelled flights within next week| CANCELLED
+Find number of cancelled flights departing from Newyork| CANCELLED
+Predict cancelled flights within next week because of travel restriction for corona virus| CANCELLATION_REASON
+Predict number of flights entering USA will be cancelled because of terorrist attack threat| CANCELLATION_REASON
+Predict number of flights that will be delayed because of air system difficulties| AIR_SYSTEM_DELAY
+Predict flights with flight delayes more than ten minutes because of air system | AIR_SYSTEM_DELAY
+As a terorrist attack has been reported in France, predict how many flights will be delayed because of security checkup| SECURITY_DELAY
+Predict flight delays for flights carrying refugies from Lebanon because of security delay| SECURITY_DELAY
+Predict number of flight delays caused by airline within next week| AIRLINE_DELAY
+Get number of flights arriving to Singapore having delay caused by airline companies| AIRLINE_DELAY
+Predict number of flights that will be delayed because of shortage of aircraft| LATE_AIRCRAFT_DELAY
+Predict all flight delays within next week caused by the cyclone Mariya| WEATHER_DELAY
