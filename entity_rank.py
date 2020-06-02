@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[15]:
+# In[89]:
 
 
 import numpy as np
 from scipy import spatial
 import matplotlib.pyplot as plt
+from collections import namedtuple
+from operator import attrgetter
+
+rankTuple = namedtuple('word', 'word distance')
 
 
-# In[16]:
+# In[68]:
 
 
 embeddings_dict = {}
@@ -29,11 +33,27 @@ print(len(words))
 print(len(embeddings_dict))
 
 
-# In[17]:
+# In[98]:
 
 
 def find_closest_embeddings_euclidean(vector_map, embedding):
     return sorted(vector_map.keys(), key=lambda word: spatial.distance.euclidean(vector_map[word], embedding))
+
+def find_closest_with_distance_euclidean(vector_map, embedding):
+    rank_val_attr_map = []
+    for key, val in vector_map.items():
+        distance = spatial.distance.euclidean(val, embedding)
+        rtuple = rankTuple(key, distance)
+        rank_val_attr_map.append(rtuple)
+    return sorted(rank_val_attr_map, key=attrgetter('distance'))
+
+def find_closest_with_distance_cosine(vector_map, embedding):
+    rank_val_attr_map = []
+    for key, val in vector_map.items():
+        distance = spatial.distance.cosine(val, embedding)
+        rtuple = rankTuple(key, distance)
+        rank_val_attr_map.append(rtuple)
+    return sorted(rank_val_attr_map, key=attrgetter('distance'))
 
 def find_closest_embeddings_cosine(vector_map, embedding):
     return sorted(vector_map.keys(), key=lambda word: spatial.distance.cosine(vector_map[word], embedding))
@@ -54,7 +74,7 @@ def get_avg_sum_embedding(line, dictionary):
     return sum_of_vector
 
 
-# In[18]:
+# In[15]:
 
 
 attr_map = 'Trane-Demos/three_datasets/flight-delay/FlightDelay.mapping'
@@ -70,7 +90,7 @@ for key, val in attr_description_map.items():
     attr_vector_map[key] = get_avg_sum_embedding(val, embeddings_dict)
 
 
-# In[19]:
+# In[102]:
 
 
 human_query_dict = {}
@@ -83,10 +103,22 @@ for line in f:
     query = line.split("|")[0]
     sum_of_human_query_vector = get_avg_sum_embedding(query, embeddings_dict)
     human_query_dict[query] = sum_of_human_query_vector
-    rank_euclidian = find_closest_embeddings_euclidean(attr_vector_map, sum_of_human_query_vector)
-    rank_cosine = find_closest_embeddings_cosine(attr_vector_map, sum_of_human_query_vector)
-    writer.write("Euclidian rank -> " + str(rank_euclidian) + "\n\n")
-    writer.write("Cosine rank -> " + str(rank_cosine) + "\n\n")
+    rank_euclidian = find_closest_with_distance_euclidean(attr_vector_map, sum_of_human_query_vector)
+    rank_cosine = find_closest_with_distance_cosine(attr_vector_map, sum_of_human_query_vector)
+    
+    writer.write("Euclidian rank -> \n")
+    i = 1
+    for rank_tuple in rank_euclidian:
+        writer.write('\t' + str(i) + ". " + str(rank_tuple.word) + ", " + str(rank_tuple.distance))
+        i+=1
+    writer.write("\n\n")
+    writer.write("Cosine rank -> \n")
+    i = 1
+    for rank_tuple in rank_cosine:
+        writer.write('\t' + str(i) + ". " + str(rank_tuple.word) + ", " + str(rank_tuple.distance))
+        i+=1
+    
+    writer.write("\n\n")
 
 
 # In[ ]:
